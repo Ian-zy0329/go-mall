@@ -1,0 +1,30 @@
+package cache
+
+import (
+	"context"
+	"github.com/Ian-zy0329/go-mall/config"
+	"github.com/redis/go-redis/v9"
+	"time"
+)
+
+var redisClient *redis.Client
+
+func Redis() *redis.Client {
+	return redisClient
+}
+
+func init() {
+	redisClient = redis.NewClient(&redis.Options{
+		Addr:         config.Redis.Addr,
+		Password:     config.Redis.Password,
+		DB:           config.Redis.DB,
+		PoolSize:     config.Redis.PoolSize,
+		DialTimeout:  10 * time.Second,
+		ReadTimeout:  30 * time.Second,
+		WriteTimeout: 30 * time.Second,
+		PoolTimeout:  30 * time.Second,
+	})
+	if err := redisClient.Ping(context.Background()).Err(); err != nil {
+		panic(err)
+	}
+}

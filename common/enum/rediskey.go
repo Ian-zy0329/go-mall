@@ -1,0 +1,5 @@
+package enum
+
+const (
+	REDIS_KEY_DEMO_ORDER_DETAIL = "GOMALL:DEMO:ORDER_DETAIL_%S"
+)

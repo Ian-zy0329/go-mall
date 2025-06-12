@@ -3,7 +3,7 @@ package middleware
 import (
 	"bytes"
 	"github.com/Ian-zy0329/go-mall/common/logger"
-	"github.com/Ian-zy0329/go-mall/util"
+	"github.com/Ian-zy0329/go-mall/common/util"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"net"
