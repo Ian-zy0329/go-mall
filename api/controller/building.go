@@ -162,3 +162,48 @@ func TestForHttpToolPost(c *gin.Context) {
 
 	app.NewResponse(c).Success(orderReply)
 }
+
+func TestMakeToken(c *gin.Context) {
+	userSvc := appservice.NewUserAppSvc(c)
+	token, err := userSvc.GenToken()
+	if err != nil {
+		if errors.Is(err, errcode.ErrUserInvalid) {
+			logger.New(c).Error("invalid user is unable to generate token", err)
+			app.NewResponse(c).Error(errcode.ErrUserInvalid)
+		} else {
+			appErr := err.(*errcode.AppError)
+			app.NewResponse(c).Error(appErr)
+		}
+		return
+	}
+	app.NewResponse(c).Success(token)
+}
+
+func TestAuthToken(c *gin.Context) {
+	app.NewResponse(c).Success(gin.H{
+		"user_id":    c.GetInt64("user_id"),
+		"session_id": c.GetString("sessionId"),
+	})
+	return
+}
+
+func TestRefreshToken(c *gin.Context) {
+	refreshToken := c.Query("refresh_token")
+	if refreshToken == "" {
+		app.NewResponse(c).Error(errcode.ErrParams)
+		return
+	}
+	userSvc := appservice.NewUserAppSvc(c)
+	token, err := userSvc.TokenRefresh(refreshToken)
+	if err != nil {
+		if errors.Is(err, errcode.ErrTooManyRequests) {
+			app.NewResponse(c).Error(errcode.ErrTooManyRequests)
+			return
+		} else {
+			appErr := err.(*errcode.AppError)
+			app.NewResponse(c).Error(appErr)
+		}
+		return
+	}
+	app.NewResponse(c).Success(token)
+}

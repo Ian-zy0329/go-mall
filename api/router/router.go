@@ -27,4 +27,7 @@ func registerBuildingRoutes(routeGroup *gin.RouterGroup) {
 	g.POST("create-demo-order", controller.TestCreateDemoOrder)
 	g.GET("httptool-get-test", controller.TestForHttpToolGet)
 	g.GET("httptool-post-test", controller.TestForHttpToolPost)
+	g.GET("token-make-test", controller.TestMakeToken)
+	g.GET("token-auth-test", middleware.AuthUser(), controller.TestAuthToken)
+	g.GET("token-refresh-test", controller.TestRefreshToken)
 }
