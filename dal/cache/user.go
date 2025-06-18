@@ -10,6 +10,8 @@ import (
 	"github.com/Ian-zy0329/go-mall/common/logger"
 	"github.com/Ian-zy0329/go-mall/logic/do"
 	"github.com/redis/go-redis/v9"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -146,4 +148,62 @@ func GetRefreshToken(ctx context.Context, refreshToken string) (*do.SessionInfo,
 func DelUserSessionOnPlatform(ctx context.Context, userSession *do.SessionInfo) error {
 	redisKey := fmt.Sprintf(enum.REDIS_KEY_USER_SESSION, userSession.UserId)
 	return Redis().HDel(ctx, redisKey, userSession.Platform).Err()
+}
+
+func SetPasswordRessetToken(ctx context.Context, userId int64, token, code string) error {
+	redisKey := fmt.Sprintf(enum.REDISKEY_PASSWORDRESET_TOKEN, token)
+	val := fmt.Sprintf("%d:%s", userId, code)
+	return Redis().Set(ctx, redisKey, val, enum.PasswordTokenDuration).Err()
+}
+
+func GetPasswordResetToken(ctx context.Context, token string) (userId int64, code string, err error) {
+	redisKey := fmt.Sprintf(enum.REDISKEY_PASSWORDRESET_TOKEN, token)
+	val, err := Redis().Get(ctx, redisKey).Result()
+	if err != nil && err != redis.Nil {
+		return
+	}
+	valArr := strings.Split(val, ":")
+	userId, _ = strconv.ParseInt(valArr[0], 10, 64)
+	code = valArr[1]
+	return
+}
+
+func DelPasswordResetToken(ctx context.Context, token string) error {
+	redisKey := fmt.Sprintf(enum.REDISKEY_PASSWORDRESET_TOKEN, token)
+	return Redis().Del(ctx, redisKey).Err()
+}
+
+func DelUserSessions(ctx context.Context, userId int64) error {
+	sessions, err := GetUserAllSessions(ctx, userId)
+	if err != nil {
+		return err
+	}
+	for _, session := range sessions {
+		DelOldSessionToken(ctx, session)
+	}
+	redisKey := fmt.Sprintf(enum.REDIS_KEY_USER_SESSION, userId)
+	return Redis().Del(ctx, redisKey).Err()
+}
+
+func GetUserAllSessions(ctx context.Context, userId int64) (map[string]*do.SessionInfo, error) {
+	redisKey := fmt.Sprintf(enum.REDIS_KEY_USER_SESSION, userId)
+	result, err := Redis().HGetAll(ctx, redisKey).Result()
+	if err != nil && err != redis.Nil {
+		return nil, err
+	}
+	// key 不存在
+	if errors.Is(err, redis.Nil) {
+		return nil, nil
+	}
+	sessions := make(map[string]*do.SessionInfo)
+	for platform, sessionData := range result {
+		session := new(do.SessionInfo)
+		err = json.Unmarshal([]byte(sessionData), &session)
+		if err != nil {
+			return nil, err
+		}
+		sessions[platform] = session
+	}
+	//logger.New(ctx).Debug("hgetall user all session", "data", sessions)
+	return sessions, nil
 }

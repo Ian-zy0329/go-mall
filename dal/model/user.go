@@ -14,6 +14,7 @@ type User struct {
 	Avatar    string                `gorm:"column:avatar;NOT NULL"`
 	Slogan    string                `gorm:"column:slogan;NOT NULL"`
 	IsDel     soft_delete.DeletedAt `gorm:"softDelete:flag"`
+	IsBlocked int                   `gorm:"column:is_blocked;default:0;NOT NULL"` // 禁用状态 0-正常 1-已禁用
 	CreatedAt time.Time             `gorm:"column:created_at;default:CURRENT_TIMESTAMP;NOT NULL"`
 	UpdatedAt time.Time             `gorm:"column:updated_at;default:CURRENT_TIMESTAMP;NOT NULL"`
 }

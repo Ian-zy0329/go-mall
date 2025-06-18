@@ -69,3 +69,8 @@ func ParseUserIdFromToken(accessToken string) (userId int64, err error) {
 	userId = int64(uid)
 	return
 }
+
+func GenPasswordResetToken(userId int64) (string, error) {
+	// 与AccessToken使用同一规则, 必要时可以反解出userId
+	return genAccessToken(userId)
+}
