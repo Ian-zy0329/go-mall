@@ -7,18 +7,47 @@ import (
 	"github.com/Ian-zy0329/go-mall/common/logger"
 	"github.com/Ian-zy0329/go-mall/common/util"
 	"github.com/Ian-zy0329/go-mall/dal/cache"
+	"github.com/Ian-zy0329/go-mall/dal/dao"
 	"github.com/Ian-zy0329/go-mall/logic/do"
 	"time"
 )
 
 type UserDomainSvc struct {
-	ctx context.Context
+	ctx     context.Context
+	userDao *dao.UserDao
 }
 
 func NewUserDomainSvc(ctx context.Context) *UserDomainSvc {
 	return &UserDomainSvc{
-		ctx: ctx,
+		ctx:     ctx,
+		userDao: dao.NewUserDao(ctx),
 	}
+}
+
+func (us *UserDomainSvc) RegisterUser(userInfo *do.UserBaseInfo, plainPassword string) (*do.UserBaseInfo, error) {
+	existedUser, err := us.userDao.FindUserByLoginName(userInfo.LoginName)
+	if err != nil {
+		return nil, errcode.Wrap("UserDomainSvcRegisterUserError", err)
+	}
+	if existedUser.LoginName != "" {
+		return nil, errcode.ErrUserNameOccupied
+	}
+	passwordHash, err := util.BcryptPassword(plainPassword)
+	if err != nil {
+		err = errcode.Wrap("UserDomainSvcRegisterUserError", err)
+		return nil, err
+	}
+	userModel, err := us.userDao.CreateUser(userInfo, passwordHash)
+	if err != nil {
+		err = errcode.Wrap("UserDomainSvcRegisterUserError", err)
+		return nil, err
+	}
+	err = util.CopyProperties(userInfo, userModel)
+	if err != nil {
+		err = errcode.Wrap("UsserDomainSvcRegisterUSerError", err)
+		return nil, err
+	}
+	return userInfo, nil
 }
 
 func (us *UserDomainSvc) GetUserBaseInfo(userId int64) *do.UserBaseInfo {
@@ -90,6 +119,7 @@ func (us *UserDomainSvc) VerifyAuthToken(accessToken string) (*do.TokenVerify, e
 	if tokenInfo != nil && tokenInfo.UserId != 0 {
 		tokenVerify.Approved = true
 		tokenVerify.UserId = tokenInfo.UserId
+		tokenVerify.Platform = tokenInfo.Platform
 		tokenVerify.SessionId = tokenInfo.SessionId
 	} else {
 		tokenVerify.Approved = false
@@ -136,4 +166,47 @@ func (us *UserDomainSvc) RefreshToken(refreshToken string) (*do.TokenInfo, error
 		return nil, err
 	}
 	return tokenInfo, nil
+}
+
+func (us *UserDomainSvc) LoginUser(LoginName, plainPassword, platform string) (*do.TokenInfo, error) {
+	existedUser, err := us.userDao.FindUserByLoginName(LoginName)
+	if err != nil {
+		return nil, errcode.Wrap("UserDomainSvcLoginUserError", err)
+	}
+	if existedUser.ID == 0 {
+		return nil, errcode.ErrUserNotRight
+	}
+	if !util.BcryptCompare(existedUser.Password, plainPassword) {
+		return nil, errcode.ErrUserNotRight
+	}
+
+	tokenInfo, err := us.GenAuthToken(existedUser.ID, platform, "")
+	return tokenInfo, err
+}
+
+func (us *UserDomainSvc) LogoutUser(userId int64, platform string) error {
+	log := logger.New(us.ctx)
+	userSession, err := cache.GetUserPlatformSession(us.ctx, userId, platform)
+	if err != nil {
+		log.Error("GetUserPlatformSessionCacheErr", "err", err)
+		return errcode.Wrap("UserDomainSvcLogoutUserError", err)
+	}
+
+	err = cache.DelAccessToken(us.ctx, userSession.AccessToken)
+	if err != nil {
+		log.Error("DelAccessTokenCacheErr", "err", err)
+		return errcode.Wrap("UserDomainSvcLogoutUserError", err)
+	}
+	err = cache.DelRefreshToken(us.ctx, userSession.RefreshToken)
+	if err != nil {
+		log.Error("DelRefreshTokenCacheErr", "err", err)
+		return errcode.Wrap("UserDomainSvcLogoutUserError", err)
+	}
+
+	err = cache.DelUserSessionOnPlatform(us.ctx, userSession)
+	if err != nil {
+		log.Error("DelUserSessionCacheErr", "err", err)
+		return errcode.Wrap("UserDomainSvcLogoutUserError", err)
+	}
+	return nil
 }

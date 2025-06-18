@@ -169,7 +169,7 @@ func TestMakeToken(c *gin.Context) {
 	if err != nil {
 		if errors.Is(err, errcode.ErrUserInvalid) {
 			logger.New(c).Error("invalid user is unable to generate token", err)
-			app.NewResponse(c).Error(errcode.ErrUserInvalid)
+			app.NewResponse(c).Error(errcode.ErrUserInvalid.WithCause(err))
 		} else {
 			appErr := err.(*errcode.AppError)
 			app.NewResponse(c).Error(appErr)

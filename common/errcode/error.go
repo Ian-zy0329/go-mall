@@ -69,9 +69,19 @@ func Wrap(msg string, err error) *AppError {
 }
 
 func (e *AppError) WithCause(err error) *AppError {
-	e.cause = err
-	e.occurred = getAppErrOccurredInfo()
-	return e
+	newErr := e.Clone()
+	newErr.cause = err
+	newErr.occurred = getAppErrOccurredInfo()
+	return newErr
+}
+
+func (e *AppError) Clone() *AppError {
+	return &AppError{
+		code:     e.code,
+		msg:      e.msg,
+		cause:    e.cause,
+		occurred: e.occurred,
+	}
 }
 
 func getAppErrOccurredInfo() string {
@@ -83,4 +93,16 @@ func getAppErrOccurredInfo() string {
 	funcName := runtime.FuncForPC(pc).Name()
 	triggerInfo := fmt.Sprintf("func: %s, file: %s, line: %d", funcName, file, line)
 	return triggerInfo
+}
+
+func (e *AppError) Unwrap() error {
+	return e.cause
+}
+
+func (e *AppError) Is(target error) bool {
+	targetErr, ok := target.(*AppError)
+	if !ok {
+		return false
+	}
+	return targetErr.Code() == e.Code()
 }

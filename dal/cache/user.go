@@ -142,3 +142,8 @@ func GetRefreshToken(ctx context.Context, refreshToken string) (*do.SessionInfo,
 	json.Unmarshal([]byte(result), &session)
 	return session, nil
 }
+
+func DelUserSessionOnPlatform(ctx context.Context, userSession *do.SessionInfo) error {
+	redisKey := fmt.Sprintf(enum.REDIS_KEY_USER_SESSION, userSession.UserId)
+	return Redis().HDel(ctx, redisKey, userSession.Platform).Err()
+}

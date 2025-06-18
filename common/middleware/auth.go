@@ -26,8 +26,9 @@ func AuthUser() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		c.Set("user_id", tokenVerify.UserId)
+		c.Set("userId", tokenVerify.UserId)
 		c.Set("sessionId", tokenVerify.SessionId)
+		c.Set("platform", tokenVerify.Platform)
 		c.Next()
 	}
 }

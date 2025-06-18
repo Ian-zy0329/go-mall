@@ -13,7 +13,13 @@ var (
 	ErrToken           = newError(10000004, "Token无效")
 	ErrForbidden       = newError(10000005, "未授权") // 访问一些未授权的资源时的错误
 	ErrTooManyRequests = newError(10000006, "请求过多")
-	ErrUserInvalid     = newError(10000007, "用户异常")
+)
+
+// 用户模块相关错误码 10000100 ~ 1000199
+var (
+	ErrUserInvalid      = newError(10000101, "用户异常")
+	ErrUserNameOccupied = newError(10000102, "用户名已被占用")
+	ErrUserNotRight     = newError(10000103, "用户名或密码不正确")
 )
 
 func (e *AppError) HttpStatusCode() int {
