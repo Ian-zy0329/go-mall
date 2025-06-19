@@ -12,14 +12,14 @@ type response struct {
 	Msg        string      `json:"message"`
 	RequestId  string      `json:"request_id"`
 	Data       interface{} `json:"data,omitempty"`
-	Pagination *pagination `json:"Pagination,omitempty"`
+	Pagination *Pagination `json:"Pagination,omitempty"`
 }
 
 func NewResponse(c *gin.Context) *response {
 	return &response{ctx: c}
 }
 
-func (r *response) SetPagination(pagination *pagination) *response {
+func (r *response) SetPagination(pagination *Pagination) *response {
 	r.Pagination = pagination
 	return r
 }

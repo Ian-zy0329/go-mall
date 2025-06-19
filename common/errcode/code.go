@@ -13,6 +13,7 @@ var (
 	ErrToken           = newError(10000004, "Token无效")
 	ErrForbidden       = newError(10000005, "未授权") // 访问一些未授权的资源时的错误
 	ErrTooManyRequests = newError(10000006, "请求过多")
+	ErrCoverData       = newError(10000007, "ConvertDataError") // 数据转换错误
 )
 
 // 用户模块相关错误码 10000100 ~ 1000199

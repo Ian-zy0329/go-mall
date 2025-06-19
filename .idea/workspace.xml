@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8e41d9ce-c566-44b5-af93-6969eea9fc20" name="Changes" comment="c12">
+      <change afterPath="$PROJECT_DIR$/common/util/mask.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dal/model/user_address.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/controller/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/controller/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/reply/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/reply/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/request/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/request/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/router/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/router/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/enum/rediskey.go" beforeDir="false" afterPath="$PROJECT_DIR$/common/enum/rediskey.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/enum/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/common/enum/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/util/token.go" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/token.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dal/cache/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/cache/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dal/dao/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/dao/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dal/model/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/model/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic/appservice/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/logic/appservice/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic/do/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/logic/do/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic/domainservice/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/logic/domainservice/user.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../../go/sdk/go1.24.1" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Ian-zy0329&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:Ian-zy0329/go-mall.git&quot;,
+    &quot;accountId&quot;: &quot;d8e5a4b8-0f26-4f8f-95f4-664450adae07&quot;
+  }
+}</component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="true" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2y9Uxmf2TmkKyZHfTQbeHLgR6l3" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;Go Build.go build github.com/Ian-zy0329/go-mall.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Go Project/src/github.com/Ian-zy0329/go-mall/library&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Code Search&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;PLAIN_TEXT&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\library" />
+      <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\common\enum" />
+      <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\common" />
+      <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\logic\do" />
+      <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\logic\domainservice" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\common\util\httptool" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="go build github.com/Ian-zy0329/go-mall" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="go-mall" />
+      <working_directory value="$PROJECT_DIR$" />
+      <envs>
+        <env name="ENV" value="dev" />
+      </envs>
+      <kind value="PACKAGE" />
+      <package value="github.com/Ian-zy0329/go-mall" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build github.com/Ian-zy0329/go-mall" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-gosdk-d297c17c1fbd-57c114c3cede-org.jetbrains.plugins.go.sharedIndexes.bundled-GO-243.24978.59" />
+        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-GO-243.24978.59" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="c4" />
+    <MESSAGE value="error" />
+    <MESSAGE value="c12" />
+    <option name="LAST_COMMIT_MESSAGE" value="c12" />
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/dal/dao/demo.go</url>
+          <line>31</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/library/whois.go</url>
+          <line>27</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

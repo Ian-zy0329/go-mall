@@ -11,6 +11,7 @@ func RegisterRoutes(engine *gin.Engine) {
 	routeGroup := engine.Group("")
 	registerBuildingRoutes(routeGroup)
 	registerUserRoutes(routeGroup)
+	registerCommodityRoutes(routeGroup)
 }
 
 func registerBuildingRoutes(routeGroup *gin.RouterGroup) {
@@ -31,4 +32,7 @@ func registerBuildingRoutes(routeGroup *gin.RouterGroup) {
 	g.GET("token-make-test", controller.TestMakeToken)
 	g.GET("token-auth-test", middleware.AuthUser(), controller.TestAuthToken)
 	g.GET("token-refresh-test", controller.TestRefreshToken)
+	// 初始化商品分类测试数据
+	g.GET("init-category-data", controller.InitCategoryTestData)
+	g.GET("init-commodity-data", controller.InitCommodityTestData)
 }
