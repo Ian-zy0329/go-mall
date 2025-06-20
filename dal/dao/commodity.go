@@ -115,3 +115,9 @@ func (cd *CommodityDao) FindCommodityById(commodityId int64) (*model.Commodity, 
 	err := DB().WithContext(cd.ctx).Where("id = ?", commodityId).Find(commodity).Error
 	return commodity, err
 }
+
+func (cd *CommodityDao) FindCommodities(commodityIdList []int64) ([]*model.Commodity, error) {
+	commodities := make([]*model.Commodity, 0)
+	err := DB().WithContext(cd.ctx).Find(&commodities, commodityIdList).Error
+	return commodities, err
+}

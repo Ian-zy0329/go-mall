@@ -23,6 +23,18 @@ var (
 	ErrUserNotRight     = newError(10000103, "用户名或密码不正确")
 )
 
+// 商品模块相关错误码 10000200 ~ 1000299
+var (
+	ErrCommodityNotExists = newError(10000200, "商品不存在")
+	ErrCommodityStockOut  = newError(10000201, "库存不足")
+)
+
+// 购物车模块相关错误码 10000300 ～ 1000399
+var (
+	ErrCartItemParam = newError(10000300, "购物项参数异常")
+	ErrCartWrongUser = newError(10000301, "用户购物信息不匹配")
+)
+
 func (e *AppError) HttpStatusCode() int {
 	switch e.Code() {
 	case Success.Code():

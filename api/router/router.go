@@ -12,6 +12,7 @@ func RegisterRoutes(engine *gin.Engine) {
 	registerBuildingRoutes(routeGroup)
 	registerUserRoutes(routeGroup)
 	registerCommodityRoutes(routeGroup)
+	registerCartRouter(routeGroup)
 }
 
 func registerBuildingRoutes(routeGroup *gin.RouterGroup) {
