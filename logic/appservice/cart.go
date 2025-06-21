@@ -87,7 +87,7 @@ func (cas *CartAppSvc) CheckCartItemBillV2(cartItemIds []int64, userId int64) (*
 		return nil, err
 	}
 	billChecker := domainservice.NewCartBillChecker(checkedCartItems, userId)
-	billInfo := billChecker.GetBill()
+	billInfo, err := billChecker.GetBill()
 	replyBillInfo := new(reply.CheckedCartItemBillV2)
 	if err = util.CopyProperties(&replyBillInfo.Items, checkedCartItems); err != nil {
 		return nil, errcode.ErrCoverData.WithCause(err)

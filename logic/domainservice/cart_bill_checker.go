@@ -116,8 +116,11 @@ func (cs *checkerStarter) Check(cbc *CartBillChecker) (err error) {
 	return
 }
 
-func (cbc *CartBillChecker) GetBill() *do.CartBillInfo {
-	cbc.handler.RunChecker(cbc)
+func (cbc *CartBillChecker) GetBill() (*do.CartBillInfo, error) {
+	err := cbc.handler.RunChecker(cbc)
+	if err != nil {
+		return nil, errcode.Wrap("CartBillCheckerError", err)
+	}
 	originalTotalPrice := lo.Reduce(cbc.checkingItems, func(agg int, item *do.ShoppingCartItem, index int) int {
 		return agg + item.CommoditySellingPrice
 	}, 0)
@@ -135,5 +138,5 @@ func (cbc *CartBillChecker) GetBill() *do.CartBillInfo {
 	billInfo.OriginalTotalPrice = originalTotalPrice
 	billInfo.TotalPrice = totalPrice
 	billInfo.VipDiscountMoney = vipDiscountMoney
-	return billInfo
+	return billInfo, err
 }

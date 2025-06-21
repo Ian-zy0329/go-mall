@@ -2,9 +2,15 @@ package dao
 
 import (
 	"context"
+	"errors"
+	"fmt"
+	"github.com/Ian-zy0329/go-mall/common/errcode"
 	"github.com/Ian-zy0329/go-mall/common/util"
 	"github.com/Ian-zy0329/go-mall/dal/model"
 	"github.com/Ian-zy0329/go-mall/logic/do"
+	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
+	"strconv"
 )
 
 type CommodityDao struct {
@@ -120,4 +126,41 @@ func (cd *CommodityDao) FindCommodities(commodityIdList []int64) ([]*model.Commo
 	commodities := make([]*model.Commodity, 0)
 	err := DB().WithContext(cd.ctx).Find(&commodities, commodityIdList).Error
 	return commodities, err
+}
+
+func (cd *CommodityDao) ReduceStuckInOrderCreate(tx *gorm.DB, orderItems []*do.OrderItem) error {
+	for _, orderItem := range orderItems {
+		commodity := new(model.Commodity)
+		tx.Clauses(clause.Locking{Strength: "UPDATE"}).WithContext(cd.ctx).
+			Find(commodity, orderItem.CommodityId)
+		newStock := commodity.StockNum - orderItem.CommodityNum
+		if newStock < 0 {
+			return errcode.ErrCommodityStockOut.WithCause(errors.New("商品缺少库存，商品ID:" + strconv.FormatInt(commodity.ID, 10)))
+		}
+		commodity.StockNum = newStock
+		err := tx.WithContext(cd.ctx).Model(commodity).Update("stock_num", newStock).Error
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (cd *CommodityDao) RecoverOrderCommodityStuck(orderItems []*do.OrderItem) error {
+	err := DBMaster().Transaction(func(tx *gorm.DB) error {
+		for _, orderItem := range orderItems {
+			commodity := new(model.Commodity)
+			tx.Clauses(clause.Locking{Strength: "UPDATE"}).WithContext(cd.ctx).Find(commodity, orderItem.CommodityId)
+			if commodity.ID == 0 {
+				return errcode.ErrNotFound.WithCause(errors.New(fmt.Sprintf("商品未找到，ID：%d", orderItem.CommodityId)))
+			}
+			newStock := commodity.StockNum + orderItem.CommodityNum
+			err := tx.WithContext(cd.ctx).Model(commodity).Update("stock_num", newStock).Error
+			if err != nil {
+				return err
+			}
+		}
+		return nil
+	})
+	return err
 }

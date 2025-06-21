@@ -35,6 +35,11 @@ var (
 	ErrCartWrongUser = newError(10000301, "用户购物信息不匹配")
 )
 
+var (
+	ErrOrderParams          = newError(10000500, "订单参数异常")
+	ErrOrderCanNotBeChanged = newError(10000501, "订单不可修改")
+)
+
 func (e *AppError) HttpStatusCode() int {
 	switch e.Code() {
 	case Success.Code():

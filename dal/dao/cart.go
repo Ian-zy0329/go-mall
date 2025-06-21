@@ -63,3 +63,7 @@ func (cd *CartDao) GetUserCartItems(userId int64) ([]*model.ShoppingCartItem, er
 func (cd *CartDao) DeleteCartItem(cartItem *model.ShoppingCartItem) error {
 	return DB().WithContext(cd.ctx).Delete(cartItem).Error
 }
+
+func (cd *CartDao) DeleteMultiCartItemInTx(tx *gorm.DB, cartIdList []int64) error {
+	return tx.WithContext(cd.ctx).Delete(&model.ShoppingCartItem{}, cartIdList).Error
+}
