@@ -4,8 +4,15 @@ package util
 
 import (
 	"bytes"
+	"crypto"
 	"crypto/aes"
 	"crypto/cipher"
+	cryptoRand "crypto/rand"
+	"crypto/rsa"
+	"crypto/sha256"
+	"crypto/x509"
+	"encoding/pem"
+	"errors"
 )
 
 // AesEncrypt AES加密  ｜ key长度为 16 字节才能加密成功
@@ -49,4 +56,32 @@ func PKCS5UnPadding(origData []byte) []byte {
 		unPadding = 0
 	}
 	return origData[:(length - unPadding)]
+}
+
+func SHA256HashBytes(stringMessage string) []byte {
+	message := []byte(stringMessage)
+	hash := sha256.New()
+	hash.Write(message)
+	bytes := hash.Sum(nil)
+	return bytes
+}
+
+func RsaSignPKCS1v15(msg, privateKey []byte, hashType crypto.Hash) ([]byte, error) {
+	block, _ := pem.Decode(privateKey)
+	if block == nil {
+		return nil, errors.New("private key decode error")
+	}
+	pri, err := x509.ParsePKCS8PrivateKey(block.Bytes)
+	if err != nil {
+		return nil, errors.New("parse private key error")
+	}
+	key, ok := pri.(*rsa.PrivateKey)
+	if ok == false {
+		return nil, errors.New("private key format error")
+	}
+	sign, err := rsa.SignPKCS1v15(cryptoRand.Reader, key, hashType, msg)
+	if err != nil {
+		return nil, errors.New("sign error")
+	}
+	return sign, nil
 }

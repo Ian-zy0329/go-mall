@@ -2,13 +2,17 @@ package domainservice
 
 import (
 	"context"
+	"fmt"
 	"github.com/Ian-zy0329/go-mall/common/app"
 	"github.com/Ian-zy0329/go-mall/common/enum"
 	"github.com/Ian-zy0329/go-mall/common/errcode"
 	"github.com/Ian-zy0329/go-mall/common/util"
 	"github.com/Ian-zy0329/go-mall/dal/dao"
+	"github.com/Ian-zy0329/go-mall/dal/model"
+	"github.com/Ian-zy0329/go-mall/library"
 	"github.com/Ian-zy0329/go-mall/logic/do"
 	"github.com/samber/lo"
+	"time"
 )
 
 type OrderDomainSvc struct {
@@ -164,4 +168,36 @@ func (ods *OrderDomainSvc) CancelUserOrder(orderNo string, userId int64) error {
 	commodityDao := dao.NewCommodityDao(ods.ctx)
 	err = commodityDao.RecoverOrderCommodityStuck(order.Items)
 	return err
+}
+
+func (ods *OrderDomainSvc) CreateOrderWxPay(orderNo string, userId int64) (payInfo *library.WxPayInvokeInfo, err error) {
+	order, err := ods.GetSpecifiedUserOrder(orderNo, userId)
+	if err != nil {
+		return
+	}
+	if order.OrderStatus != enum.OrderStatusCreated {
+		err = errcode.ErrOrderParams
+		return
+	}
+	order.PayType = enum.PayTypeWxPay
+	order.OrderStatus = enum.OrderStatusUnPaid
+	order.PayState = enum.PayStateUnPaid
+	orderModel := new(model.Order)
+	if err = util.CopyProperties(orderModel, order); err != nil {
+		err = errcode.Wrap("CreateOrderWxPayError", err)
+		return
+	}
+	if err = ods.orderDao.UpdateOrder(orderModel); err != nil {
+		err = errcode.Wrap("CreateOrderWxPayError", err)
+		return
+	}
+	payInfo = &library.WxPayInvokeInfo{
+		AppId:     "123456",
+		TimeStamp: fmt.Sprintf("%v", time.Now().Unix()),
+		NonceStr:  util.RandomString(32),
+		Package:   "prepay_id=wx21201855730335ac86f8c43d18891123400",
+		SignType:  "RSA",
+		PaySign:   "oR9d8PuhnIc+YZ8cBHFCwfgpaK9gd7vaRvkYD7rthRAZ/X+QBhcCYL21N7cHCTUxbQ+EAt6Uy+lwSN22f5YZvI45MLko8Pfso0jm46v5hqcVwrk6uddkGuT+Cdvu4WBqDzaDjnNa5UK3GfE1Wfl2gHxIIY5lLdUgWFts17D4WuolLLkiFZV+JSHMvH7eaLdT9N5GBovBwu5yYKUR7skR8Fu+LozcSqQixnlEZUfyE55feLOQTUYzLmR9pNtPbPsu6WVhbNHMS3Ss2+AehHvz+n64GDmXxbX++IOBvm2olHu3PsOUGRwhudhVf7UcGcunXt8cqNjKNqZLhLw4jq/xDg==",
+	}
+	return
 }

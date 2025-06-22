@@ -140,3 +140,7 @@ func (od *OrderDao) UpdateOrderStatus(orderId int64, status int) error {
 		Where("id = ?", orderId).
 		Update("order_status", status).Error
 }
+
+func (od *OrderDao) UpdateOrder(orderModel *model.Order) error {
+	return DBMaster().WithContext(od.ctx).Model(orderModel).Updates(orderModel).Error
+}

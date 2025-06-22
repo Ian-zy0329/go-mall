@@ -13,4 +13,5 @@ func registerOrderRouter(rg *gin.RouterGroup) {
 	g.GET("user-order", controller.UserOrders)
 	g.GET(":order_no/info", controller.OrderInfo)
 	g.PATCH(":order_no/cancel", controller.CancelOrder)
+	g.POST("create-pay", controller.CreateOrderPay)
 }

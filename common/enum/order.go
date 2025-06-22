@@ -37,3 +37,9 @@ var OrderFrontStatus = map[int]string{
 	OrderStatusUnpaidClose:    "已取消",
 	OrderStatusMerchantClose:  "已取消",
 }
+
+const (
+	PayTypeNotConfirmed = iota // 未确认 -- 创建订单时的初始状态
+	PayTypeWxPay               // 微信支付
+	PayTypeAliPay              // 支付宝
+)

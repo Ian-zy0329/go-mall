@@ -82,3 +82,14 @@ func (oas *OrderAppSvc) GetOrderInfo(orderNo string, userId int64) (*reply.Order
 func (oas *OrderAppSvc) CancelOrder(orderNo string, userId int64) error {
 	return oas.orderDomainSvc.CancelUserOrder(orderNo, userId)
 }
+
+func (oas *OrderAppSvc) OrderCreatePay(payRequest *request.OrderPayCreate, userId int64) (replyData interface{}, err error) {
+	switch payRequest.PayType {
+	case enum.PayTypeWxPay:
+		payInfo, err := oas.orderDomainSvc.CreateOrderWxPay(payRequest.OrderNo, userId)
+		return payInfo, err
+	default:
+		err = errcode.ErrParams
+	}
+	return
+}
