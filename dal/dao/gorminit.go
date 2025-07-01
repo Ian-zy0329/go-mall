@@ -36,3 +36,11 @@ func init() {
 	_DbMaster = initDB(config.Database.Master)
 	_DbSlave = initDB(config.Database.Slave)
 }
+
+func SetDBMasterConn(conn *gorm.DB) {
+	_DbMaster = conn
+}
+
+func SetDBSlaveConn(conn *gorm.DB) {
+	_DbSlave = conn
+}

@@ -4,22 +4,25 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e41d9ce-c566-44b5-af93-6969eea9fc20" name="Changes" comment="c12">
-      <change afterPath="$PROJECT_DIR$/common/util/mask.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dal/model/user_address.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/controller/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/controller/user.go" afterDir="false" />
+    <list default="true" id="8e41d9ce-c566-44b5-af93-6969eea9fc20" name="Changes" comment="c16.1">
+      <change afterPath="$PROJECT_DIR$/library/wxpay.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logic/domainservice/order_payer.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/dao/order_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/dao/user_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/domainservice/user_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/library/whois_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/library/wxpay_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/reply/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/reply/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/request/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/request/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/router/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/router/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/enum/rediskey.go" beforeDir="false" afterPath="$PROJECT_DIR$/common/enum/rediskey.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/enum/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/common/enum/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/util/token.go" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/token.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dal/cache/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/cache/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/util/httptool/httptool.go" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/httptool/httptool.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dal/dao/gorminit.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/dao/gorminit.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dal/dao/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/dao/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dal/model/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/model/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logic/appservice/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/logic/appservice/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logic/do/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/logic/do/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logic/domainservice/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/logic/domainservice/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic/domainservice/order.go" beforeDir="false" afterPath="$PROJECT_DIR$/logic/domainservice/order.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +59,9 @@
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -80,11 +86,11 @@
     &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
     &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Go Project/src/github.com/Ian-zy0329/go-mall/library&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Go Project/src/github.com/Ian-zy0329/go-mall/api/reply&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Code Search&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
@@ -94,11 +100,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\library" />
+      <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\api\reply" />
+      <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\dal\model" />
+      <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\common\util" />
       <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\common\enum" />
-      <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\common" />
       <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\logic\do" />
-      <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\logic\domainservice" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\common\util\httptool" />
@@ -150,7 +156,11 @@
     <MESSAGE value="c4" />
     <MESSAGE value="error" />
     <MESSAGE value="c12" />
-    <option name="LAST_COMMIT_MESSAGE" value="c12" />
+    <MESSAGE value="c13" />
+    <MESSAGE value="c14" />
+    <MESSAGE value="c15" />
+    <MESSAGE value="c16.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="c16.1" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
@@ -158,15 +168,35 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+        <line-breakpoint type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/dal/dao/demo.go</url>
           <line>31</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+        <line-breakpoint type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/library/whois.go</url>
           <line>27</line>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/api/controller/commodity.go</url>
+          <line>14</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/logic/domainservice/cart.go</url>
+          <line>131</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/logic/domainservice/user.go</url>
+          <line>309</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/logic/appservice/order.go</url>
+          <line>36</line>
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

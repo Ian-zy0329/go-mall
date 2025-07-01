@@ -23,7 +23,7 @@ type UserBaseInfo struct {
 	ID        uint64    `json:"id"`
 	NickName  string    `json:"nick_name"`
 	LoginName string    `json:"login_name"`
-	Verified  uint      `json:"verified"`
+	Verified  string    `json:"verified"`
 	Avatar    string    `json:"avatar"`
 	Slogan    string    `json:"slogan"`
 	IsBlocked uint      `json:"is_blocked"`

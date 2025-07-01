@@ -25,13 +25,13 @@ func (ud *UserDao) CreateUser(userInfo *do.UserBaseInfo, userPasswordHash string
 	userModel := new(model.User)
 	err := util.CopyProperties(userModel, userInfo)
 	if err != nil {
-		err = errcode.Wrap("UserDaoCreaeteUserError", err)
+		err = errcode.Wrap("UserDaoCreateUserError", err)
 		return nil, err
 	}
 	userModel.Password = userPasswordHash
 	err = DBMaster().WithContext(ud.ctx).Create(userModel).Error
 	if err != nil {
-		err = errcode.Wrap("UserDaoCreaeteUserError", err)
+		err = errcode.Wrap("UserDaoCreateUserError", err)
 		return nil, err
 	}
 	return userModel, nil

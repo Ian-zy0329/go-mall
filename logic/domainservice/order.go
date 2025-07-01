@@ -191,6 +191,7 @@ func (ods *OrderDomainSvc) CreateOrderWxPay(orderNo string, userId int64) (payIn
 		err = errcode.Wrap("CreateOrderWxPayError", err)
 		return
 	}
+
 	payInfo = &library.WxPayInvokeInfo{
 		AppId:     "123456",
 		TimeStamp: fmt.Sprintf("%v", time.Now().Unix()),

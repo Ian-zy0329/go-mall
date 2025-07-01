@@ -16,7 +16,7 @@ type UserInfoReply struct {
 	ID        int64  `json:"id"`
 	Nickname  string `json:"nickname"`
 	LoginName string `json:"login_name"`
-	Verified  int    `json:"verified"`
+	Verified  string `json:"verified"`
 	Avatar    string `json:"avatar"`
 	Slogan    string `json:"slogan"`
 	IsBlocked int    `json:"is_blocked"`

@@ -9,7 +9,9 @@ import (
 	"github.com/Ian-zy0329/go-mall/common/logger"
 	"github.com/Ian-zy0329/go-mall/common/util"
 	"io/ioutil"
+	"net"
 	"net/http"
+	"sync"
 	"time"
 )
 
@@ -136,4 +138,39 @@ func Request(method string, url string, options ...Option) (httpStatusCode int, 
 
 	respBody, _ = ioutil.ReadAll(resp.Body)
 	return
+}
+
+var (
+	_Client *http.Client
+	once    sync.Once
+)
+
+func getHttpClient() *http.Client {
+	if _Client != nil {
+		// 因为Unit test里要把Client换掉, 所以虽然用了once.Do但是还是先判断一下_Client有没有实例化
+		// 不然在单测里, Mock API调用时, gock没办法拦截http client对外部API的请求
+		return _Client
+	}
+	once.Do(func() {
+		tr := &http.Transport{
+			//Proxy: http.ProxyFromEnvironment,
+			DialContext: (&net.Dialer{
+				Timeout:   30 * time.Second,
+				KeepAlive: 30 * time.Second,
+			}).DialContext,
+			MaxIdleConns:          100,
+			IdleConnTimeout:       90 * time.Second,
+			MaxIdleConnsPerHost:   50,
+			MaxConnsPerHost:       50,
+			ForceAttemptHTTP2:     true,
+			TLSHandshakeTimeout:   10 * time.Second,
+			ExpectContinueTimeout: 1 * time.Second,
+		}
+		_Client = &http.Client{Transport: tr}
+	})
+	return _Client
+}
+
+func SetUTHttpClient(client *http.Client) {
+	_Client = client
 }
