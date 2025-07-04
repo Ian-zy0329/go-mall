@@ -6,6 +6,7 @@ import (
 	"github.com/Ian-zy0329/go-mall/common/enum"
 	"github.com/Ian-zy0329/go-mall/common/logger"
 	"github.com/Ian-zy0329/go-mall/config"
+	"github.com/Ian-zy0329/go-mall/logic/appservice"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"os"
@@ -24,6 +25,12 @@ func main() {
 		Handler: g,
 	}
 	log := logger.New(context.Background())
+	//redis库存初始化
+	stockService := appservice.NewCommodityAppSvc(context.Background())
+	if err := stockService.InitRedisStock(); err != nil {
+		log.Error("Failed to init stock: %v", err)
+	}
+	//平滑关闭
 	done := make(chan os.Signal)
 	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 	go func() {

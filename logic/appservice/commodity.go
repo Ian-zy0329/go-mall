@@ -87,3 +87,7 @@ func (cas *CommodityAppSvc) CommodityInfo(commodityId int64) *reply.Commodity {
 	util.CopyProperties(commodityInfo, commodityDO)
 	return commodityInfo
 }
+
+func (cas *CommodityAppSvc) InitRedisStock() error {
+	return cas.commodityDomainSvc.InitRedisStock()
+}

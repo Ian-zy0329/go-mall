@@ -41,3 +41,24 @@ type Commodity struct {
 	CreatedAt     time.Time `json:"created_at"`
 	UpdatedAt     time.Time `json:"updated_at"`
 }
+
+// StockItem 库存数据结构
+type StockItem struct {
+	ItemID    int64     `json:"item_id"`   // 当前库存
+	Stock     int       `json:"stock"`     // 当前库存
+	Version   int64     `json:"version"`   // 版本号（乐观锁）
+	Modified  time.Time `json:"modified"`  // 最后修改时间
+	InitStock int       `json:"initStock"` // 初始库存
+}
+
+// DeductionLog 扣减日志
+type DeductionLog struct {
+	OrderID    string    `json:"order_id"`
+	UserID     int64     `json:"user_id"`
+	ItemID     int64     `json:"item_id"`
+	Quantity   int64     `json:"quantity"`
+	OldStock   int64     `json:"old_stock"`
+	NewStock   int64     `json:"new_stock"`
+	Timestamp  time.Time `json:"timestamp"`
+	IsRollback bool      `json:"is_rollback"` // 是否回滚操作
+}

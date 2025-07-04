@@ -4,14 +4,18 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/Ian-zy0329/go-mall/common/app"
+	"github.com/Ian-zy0329/go-mall/common/enum"
 	"github.com/Ian-zy0329/go-mall/common/errcode"
 	"github.com/Ian-zy0329/go-mall/common/logger"
 	"github.com/Ian-zy0329/go-mall/common/util"
+	"github.com/Ian-zy0329/go-mall/dal/cache"
 	"github.com/Ian-zy0329/go-mall/dal/dao"
 	"github.com/Ian-zy0329/go-mall/logic/do"
 	"github.com/Ian-zy0329/go-mall/resources"
 	"sort"
+	"time"
 )
 
 type CommodityDomainSvc struct {
@@ -41,6 +45,37 @@ func (cds *CommodityDomainSvc) InitCategoryData() error {
 	err = cds.commodityDao.InitCategoryData(categoryDos)
 	if err != nil {
 		return errcode.Wrap("初始化商品分类错误", err)
+	}
+	return nil
+}
+
+func (cds *CommodityDomainSvc) InitRedisStock() error {
+	commodityModels, _ := cds.commodityDao.GetAllCommodity()
+	pipeline := cache.Redis().Pipeline()
+	stockItems := make([]*do.StockItem, 0)
+	for _, commodity := range commodityModels {
+		stockItems = append(stockItems, &do.StockItem{
+			InitStock: commodity.StockNum,
+			Stock:     commodity.StockNum,
+			Modified:  time.Now(),
+			Version:   1,
+			ItemID:    commodity.ID,
+		})
+	}
+	for _, stockItem := range stockItems {
+		stockKey := fmt.Sprintf("%s%d", enum.STOCK_KEY_PREFIX, stockItem.ItemID)
+		pipeline.HSet(cds.ctx, stockKey, map[string]interface{}{
+			"id":        stockItem.ItemID,
+			"stock":     stockItem.Stock,
+			"version":   stockItem.Version,
+			"modified":  stockItem.Modified.Format(time.RFC3339),
+			"initStock": stockItem.InitStock,
+		})
+		pipeline.SAdd(cds.ctx, enum.STOCK_INIT_SETKEY, stockItem.ItemID)
+		pipeline.Expire(cds.ctx, stockKey, 30*24*time.Hour) // 30天过期
+	}
+	if _, err := pipeline.Exec(cds.ctx); err != nil {
+		return errcode.Wrap("初始化商品库存错误", err)
 	}
 	return nil
 }

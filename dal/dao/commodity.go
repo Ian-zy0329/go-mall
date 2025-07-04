@@ -4,13 +4,19 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Ian-zy0329/go-mall/common/enum"
 	"github.com/Ian-zy0329/go-mall/common/errcode"
 	"github.com/Ian-zy0329/go-mall/common/util"
+	"github.com/Ian-zy0329/go-mall/dal/cache"
 	"github.com/Ian-zy0329/go-mall/dal/model"
 	"github.com/Ian-zy0329/go-mall/logic/do"
+	"github.com/Ian-zy0329/go-mall/resources"
+	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
+	"io"
 	"strconv"
+	"time"
 )
 
 type CommodityDao struct {
@@ -51,6 +57,18 @@ func (cd *CommodityDao) GetOneCommodity() (*model.Commodity, error) {
 	err := DB().WithContext(cd.ctx).
 		Find(commodity).Error
 	return commodity, err
+}
+
+func (cd *CommodityDao) GetAllCommodity() (commodityModels []*model.Commodity, err error) {
+	// 查询所有商品信息，不带条件查询全表数据
+	err = DB().WithContext(cd.ctx).
+		Model(&model.Commodity{}). // 明确指定操作的模型
+		Find(&commodityModels).Error
+	if err != nil {
+		// 如果发生错误，返回空结果和错误信息
+		return nil, err
+	}
+	return commodityModels, nil
 }
 
 func (cd *CommodityDao) InitCommodityData(commodityDos []*do.Commodity) error {
@@ -144,6 +162,53 @@ func (cd *CommodityDao) ReduceStuckInOrderCreate(tx *gorm.DB, orderItems []*do.O
 		}
 	}
 	return nil
+}
+
+// ReduceStuckInOrderCreateByLua 库存原子扣减
+func (cd *CommodityDao) ReduceStuckInOrderCreateByLua(tx *gorm.DB, orderItems []*do.OrderItem, userId int64) error {
+	redisStockService := cache.RedisStockService()
+	deductStockLuaHandler, _ := resources.LoadResourceFile("deduct_stock.lua")
+	scriptContent, err := io.ReadAll(deductStockLuaHandler)
+	if err != nil {
+		panic(err)
+	}
+	// 使用 redis.NewScript 来封装 Lua 脚本
+	script := redis.NewScript(string(scriptContent))
+	sha, err := script.Load(cd.ctx, redisStockService).Result()
+	if err != nil {
+		return errcode.Wrap("failed to load lua script: %w", err)
+	}
+	for _, orderItem := range orderItems {
+		stockKey := fmt.Sprintf("%s%d", enum.STOCK_KEY_PREFIX, orderItem.CommodityId)
+		logKey := fmt.Sprintf("%s%d", enum.STOCK_LOG_KEY_PREFIX, orderItem.CommodityId)
+		lockKey := fmt.Sprintf("%s%d", enum.STOCK_LOCK_KEY_PREFIX, orderItem.CommodityId)
+		// 准备参数
+		args := []interface{}{
+			orderItem.CommodityNum,
+			orderItem.OrderId,
+			userId,
+			500, // 500ms 锁超时
+			time.Now().Format(time.RFC3339),
+		}
+		//执行脚本
+		result, err := redisStockService.EvalSha(cd.ctx, sha, []string{stockKey, logKey, lockKey}, args...).Result()
+		if err != nil {
+			return errcode.Wrap("deduction failed: %w", err)
+		}
+		// 解析结果
+		if resultMap, ok := result.([]interface{}); ok {
+			if len(resultMap) > 0 && resultMap[0] == "err" {
+				return errors.New(resultMap[2].(string))
+			}
+
+			// 成功返回
+			status := resultMap[0].(string)
+			if status == "SUCCESS" {
+				return nil
+			}
+		}
+	}
+	return errors.New("unknown deduction error")
 }
 
 func (cd *CommodityDao) RecoverOrderCommodityStuck(orderItems []*do.OrderItem) error {

@@ -76,7 +76,8 @@ func (ods *OrderDomainSvc) CreateOrder(items []*do.ShoppingCartItem, userAddress
 		//discountDao.recordDiscount(tx,discount)
 	}
 	commodityDao := dao.NewCommodityDao(ods.ctx)
-	err = commodityDao.ReduceStuckInOrderCreate(tx, order.Items)
+	//err = commodityDao.ReduceStuckInOrderCreate(tx, order.Items)
+	err = commodityDao.ReduceStuckInOrderCreateByLua(tx, order.Items, order.UserId)
 	if err != nil {
 		return nil, err
 	}

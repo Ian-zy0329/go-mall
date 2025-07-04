@@ -3,12 +3,20 @@ package config
 import "time"
 
 var (
-	App      *appConfig
-	Database *databaseConfig
-	Redis    *redisConfig
+	App                     *appConfig
+	Database                *databaseConfig
+	Redis                   *redisConfig
+	RedisStockServiceConfig *redisStockServiceConfig
 )
 
 type redisConfig struct {
+	Addr     string `mapstructure:"addr"`
+	Password string `mapstructure:"password"`
+	DB       int    `mapstructure:"db"`
+	PoolSize int    `mapstructure:"pool_size"`
+}
+
+type redisStockServiceConfig struct {
 	Addr     string `mapstructure:"addr"`
 	Password string `mapstructure:"password"`
 	DB       int    `mapstructure:"db"`

@@ -4,23 +4,18 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e41d9ce-c566-44b5-af93-6969eea9fc20" name="Changes" comment="c16.1">
-      <change afterPath="$PROJECT_DIR$/library/wxpay.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/logic/domainservice/order_payer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/dao/order_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/dao/user_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/domainservice/user_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/library/whois_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/library/wxpay_test.go" afterDir="false" />
+    <list default="true" id="8e41d9ce-c566-44b5-af93-6969eea9fc20" name="Changes" comment="c17">
+      <change afterPath="$PROJECT_DIR$/resources/deduct_stock.lua" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/reply/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/reply/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/util/httptool/httptool.go" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/httptool/httptool.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/enum/rediskey.go" beforeDir="false" afterPath="$PROJECT_DIR$/common/enum/rediskey.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/application.dev.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/application.dev.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bootstrap.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/bootstrap.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dal/dao/gorminit.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/dao/gorminit.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dal/dao/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/dao/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logic/do/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/logic/do/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dal/cache/redisinit.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/cache/redisinit.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dal/dao/commodity.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/dao/commodity.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic/appservice/commodity.go" beforeDir="false" afterPath="$PROJECT_DIR$/logic/appservice/commodity.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic/do/commodity.go" beforeDir="false" afterPath="$PROJECT_DIR$/logic/do/commodity.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic/domainservice/commodity.go" beforeDir="false" afterPath="$PROJECT_DIR$/logic/domainservice/commodity.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logic/domainservice/order.go" beforeDir="false" afterPath="$PROJECT_DIR$/logic/domainservice/order.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
@@ -73,31 +68,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;Go Build.go build github.com/Ian-zy0329/go-mall.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Go Project/src/github.com/Ian-zy0329/go-mall/api/reply&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "Go Build.go build github.com/Ian-zy0329/go-mall.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "main",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/Go Project/src/github.com/Ian-zy0329/go-mall/api/reply",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "LanguageServers"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;PLAIN_TEXT&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "PLAIN_TEXT"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\api\reply" />
@@ -107,6 +102,7 @@
       <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\logic\do" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\resources" />
       <recent name="D:\Go Project\src\github.com\Ian-zy0329\go-mall\common\util\httptool" />
     </key>
   </component>
@@ -141,6 +137,9 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.lua" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -160,7 +159,8 @@
     <MESSAGE value="c14" />
     <MESSAGE value="c15" />
     <MESSAGE value="c16.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="c16.1" />
+    <MESSAGE value="c17" />
+    <option name="LAST_COMMIT_MESSAGE" value="c17" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
@@ -187,16 +187,6 @@
           <url>file://$PROJECT_DIR$/logic/domainservice/cart.go</url>
           <line>131</line>
           <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/logic/domainservice/user.go</url>
-          <line>309</line>
-          <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/logic/appservice/order.go</url>
-          <line>36</line>
-          <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
